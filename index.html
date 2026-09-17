@@ -17,8 +17,41 @@
       color: #f8fafc;
     }
     
+    /* شريط الأخبار المتحرك بأسلوب قناة الجزيرة */
+    .aljazeera-ticker-wrap {
+      width: 100%;
+      background: #991b1b; /* أحمر عاجل عالي التباين */
+      border-bottom: 3px solid #facc15; /* لمسة ذهبية براقة */
+      overflow: hidden;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .aljazeera-ticker {
+      display: inline-block;
+      white-space: nowrap;
+      padding-right: 100%;
+      animation: ticker-animation 20s linear infinite;
+    }
+
+    .aljazeera-ticker-item {
+      display: inline-block;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #ffffff;
+      padding: 8px 0;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes ticker-animation {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(100%, 0, 0); }
+    }
+
+    /* شريط العلم السوداني */
     .sudan-banner-line {
-      height: 6px;
+      height: 5px;
       background: linear-gradient(to left, #007a3d 0% 33.3%, #ffffff 33.3% 66.6%, #000000 66.6% 100%);
     }
 
@@ -56,6 +89,15 @@
 <body class="min-h-screen flex flex-col justify-between">
 
   <div>
+    <!-- شريط الأخبار العاجلة المتحرك بأسلوب الجزيرة -->
+    <div class="aljazeera-ticker-wrap">
+      <div class="aljazeera-ticker">
+        <div class="aljazeera-ticker-item">
+          😍 تصميم أحمد محمدنور — دليل القبول التفاعلي للجامعات السودانية ✍️
+        </div>
+      </div>
+    </div>
+
     <!-- شريط العلم السوداني -->
     <div class="sudan-banner-line"></div>
 
@@ -98,7 +140,7 @@
               class="bright-input w-full rounded-2xl px-4 py-3 font-black outline-none transition-all" />
           </div>
 
-          <!-- تصنيف المجال (علمي، أدبي، هندسي، حاسوب...) -->
+          <!-- تصنيف المجال -->
           <div>
             <label class="block text-base font-black text-emerald-400 mb-2">المجال / التخصص</label>
             <select id="select-category" onchange="executeSearch()" class="bright-input w-full rounded-2xl px-4 py-3 font-black outline-none transition-all">
@@ -156,7 +198,6 @@
       return text.replace(/[إأآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').trim().toLowerCase();
     }
 
-    // القواعد البرمجية لتصنيف الكليات حسب المجال
     function matchesCategory(collegeName, category) {
       if (!category) return true;
       const text = normalizeText(collegeName);
